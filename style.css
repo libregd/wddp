@@ -1,0 +1,186 @@
+/* 通用样式 */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans SC', sans-serif;
+  background: #f7f7f7;
+  color: #333;
+}
+
+/* 顶部导航栏 */
+header nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  box-sizing: border-box;
+  max-width: 100vw;
+}
+
+header nav h1 {
+  font-size: 1.2rem;
+  margin: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #a083ea;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* 主体容器 */
+main#container {
+  padding: 70px 16px 80px 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* 卡片式书籍条目 */
+.card {
+  display: flex;
+  flex-direction: row;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-bottom: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.card img {
+  width: 120px;
+  height: auto;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.card-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-content h2 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+}
+
+.card-content p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* 章节页面头部 */
+.chapter-header {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chapter-select {
+  padding: 6px;
+  font-size: 0.95rem;
+  max-width: 100%;
+}
+
+/* 章节内容展示 */
+.chapter-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+/* 底部章节导航 */
+#chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 10px 16px;
+  border-top: 1px solid #ccc;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  max-width: 100vw;
+}
+
+#chapter-nav button {
+  background: #ea83c8;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  flex-shrink: 1;
+}
+
+#chapter-nav button:hover {
+  background: #ea83c8;
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* 响应式调整 */
+@media (max-width: 600px) {
+  .card {
+    flex-direction: column;
+  }
+  .card img {
+    width: 100%;
+    height: auto;
+  }
+  .card-content h2 {
+    font-size: 1rem;
+  }
+  .card-content p {
+    font-size: 0.88rem;
+  }
+  .chapter-content {
+    font-size: 0.95rem;
+  }
+  #chapter-nav button {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+  .chapter-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
