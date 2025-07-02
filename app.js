@@ -82,7 +82,7 @@ async function renderBookPage() {
     content.innerHTML = ''; // 清空容器
     
     // 按空行分割文本并创建段落
-    txt.split(/\n\s*\n/) 
+    txt.split(/\s*\n/) 
       .map(para => para.trim())
       .filter(para => para.length > 0)
       .forEach(para => {
