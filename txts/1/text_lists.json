@@ -1,4 +1,23 @@
 [
-	{ "No":1 , "showName":"1. The Saddleback Story", "trueName":"1" },
-	{ "No":2 , "showName":"2. Myths About Growing Churches", "trueName":"2" }
+  { "No": 0, "showName": "0 About & Contents & contact", "trueName": "0" },
+  { "No": 1, "showName": "1 The Saddleback Story", "trueName": "1" },
+  { "No": 2, "showName": "2 Myths About Growing Churches ", "trueName": "2" },
+  { "No": 3, "showName": "3 What Drives Your Church?", "trueName": "3" },
+  { "No": 4, "showName": "4 The Foundation for a Healthy Church", "trueName": "4" },
+  { "No": 5, "showName": "5 Defining Your Purposes", "trueName": "5" },
+  { "No": 6, "showName": "6 Communicating Your Purposes", "trueName": "6" },
+  { "No": 7, "showName": "7 Organizing Around Your Purposes", "trueName": "7" },
+  { "No": 8, "showName": "8 Applying Your Purposes", "trueName": "8" },
+  { "No": 9, "showName": "9 Who Is Your Target?", "trueName": "9" },
+  { "No": 10, "showName": "10 Knowing Whom You Can Best Reach", "trueName": "10" },
+  { "No": 11, "showName": "11 Developing Your Strategy", "trueName": "11" },
+  { "No": 12, "showName": "12 How Jesus Attracted Crowds", "trueName": "12" },
+  { "No": 13, "showName": "13 Worship Can Be a Witness", "trueName": "13" },
+  { "No": 14, "showName": "14 Designing a Seeker-Sensitive Service", "trueName": "14" },
+  { "No": 15, "showName": "15 Selecting Your Music", "trueName": "15" },
+  { "No": 16, "showName": "16 Preaching to the Unchurched", "trueName": "16" },
+  { "No": 17, "showName": "17 Turning Attenders into Members", "trueName": "17" },
+  { "No": 18, "showName": "18 Developing Mature Members", "trueName": "18" },
+  { "No": 19, "showName": "19 Turning Members into Ministers", "trueName": "19" },
+  { "No": 20, "showName": "20 God’s Purpose for Your Church", "trueName": "20" }
 ]
