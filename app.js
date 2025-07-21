@@ -5,8 +5,23 @@ let currentChapter = 1;
 
 window.onload = async () => {
   document.getElementById('chapter-nav').classList.add('hidden');
-  folderData = await fetchJSON('/txts/folder_lists.json');
-  renderHomePage();
+  
+  // 添加加载提示
+  document.getElementById('container').innerHTML = '<p>加载中...</p>';
+  
+  try {
+    folderData = await fetchJSON('txts/folder_lists.json');
+    renderHomePage();
+  } catch (error) {
+    console.error('初始化失败:', error);
+    document.getElementById('container').innerHTML = `
+      <div class="error">
+        <h2>加载失败</h2>
+        <p>${error.message}</p>
+        <p>请检查文件路径是否正确</p>
+      </div>
+    `;
+  }
 };
 
 function goHome() {
@@ -15,20 +30,33 @@ function goHome() {
   renderHomePage();
 }
 
-function fetchJSON(path) {
-  return fetch(path).then(res => res.json());
+async function fetchJSON(path) {
+  try {
+    const res = await fetch(path);
+    if (!res.ok) throw new Error(`HTTP错误! 状态码: ${res.status}`);
+    return await res.json();
+  } catch (error) {
+    console.error('加载JSON失败:', error);
+    throw new Error(`无法加载文件: ${path}`);
+  }
 }
 
 function renderHomePage() {
   document.getElementById('chapter-nav').classList.add('hidden');  
   const container = document.getElementById('container');
   container.innerHTML = '';
+  
+  if (folderData.length === 0) {
+    container.innerHTML = '<div class="error"><h2>没有找到书籍</h2><p>请检查txts/folder_lists.json文件是否存在</p></div>';
+    return;
+  }
+  
   folderData.forEach(book => {
     const card = document.createElement('div');
     card.className = 'card';
     card.onclick = () => openBook(book);
     card.innerHTML = `
-      <img src="txts/${book.trueName}/${book.cover}" alt="cover" />
+      <img src="txts/${book.trueName}/${book.cover}" alt="封面" />
       <div class="card-content">
         <h2>${book.showName}</h2>
         <p>${book.des}</p>
@@ -36,14 +64,25 @@ function renderHomePage() {
     `;
     container.appendChild(card);
   });
-
 }
 
 async function openBook(book) {
   currentFolder = book;
   currentChapter = 1;
-  chapterData = await fetchJSON(`/txts/${book.trueName}/text_lists.json`);
-  renderBookPage();
+  
+  try {
+    chapterData = await fetchJSON(`txts/${book.trueName}/text_lists.json`);
+    renderBookPage();
+  } catch (error) {
+    console.error('打开书籍失败:', error);
+    document.getElementById('container').innerHTML = `
+      <div class="error">
+        <h2>加载失败</h2>
+        <p>${error.message}</p>
+        <button onclick="goHome()">返回首页</button>
+      </div>
+    `;
+  }
 }
 
 async function renderBookPage() {
@@ -75,14 +114,20 @@ async function renderBookPage() {
 
   const content = document.createElement('div');
   content.className = 'chapter-content';
-  const chapterFile = chapterData.find(ch => ch.No === currentChapter)?.trueName || '1';
-  // ====== 针对txt的空行进行p段落处理 ======
+  
+  // 添加加载提示
+  content.innerHTML = '<p>加载章节内容中...</p>';
+  container.appendChild(content);
+  
   try {
-    const txt = await fetch(`/txts/${currentFolder.trueName}/${chapterFile}.txt`).then(res => res.text());
-    content.innerHTML = ''; // 清空容器
+    const chapterFile = chapterData.find(ch => ch.No === currentChapter)?.trueName || '1';
+    const txt = await fetch(`txts/${currentFolder.trueName}/${chapterFile}.txt`).then(res => {
+      if (!res.ok) throw new Error(`加载失败: ${res.status}`);
+      return res.text();
+    });
     
-    // 按空行分割文本并创建段落
-    txt.split(/\s*\n/) 
+    content.innerHTML = '';
+    txt.split(/\s*\n/)
       .map(para => para.trim())
       .filter(para => para.length > 0)
       .forEach(para => {
@@ -90,12 +135,15 @@ async function renderBookPage() {
         p.textContent = para;
         content.appendChild(p);
       });
-  } catch {
-    content.innerHTML = '<p>[章节加载失败]</p>';
+  } catch (error) {
+    console.error('加载章节失败:', error);
+    content.innerHTML = `
+      <div class="error">
+        <p>章节加载失败</p>
+        <p>${error.message}</p>
+      </div>
+    `;
   }
-  // ====== p段落处理修改结束 ======
-
-  container.appendChild(content);
 
   document.getElementById('chapter-nav').classList.remove('hidden');
 }
