@@ -5,9 +5,16 @@ let currentChapter = 1;
 
 window.onload = async () => {
   document.getElementById('chapter-nav').classList.add('hidden');
-  folderData = await fetchJSON('/txts/folder_lists.json');
-  renderHomePage();
+
+  try {
+    folderData = await fetchJSON('/txts/folder_lists.json');
+    renderHomePage();
+  } catch (error) {
+    alert('无法加载数据，请在vscode中，open with live server打开或部署到本地服务器后再访问。');
+    console.error('加载失败:', error);
+  }
 };
+
 
 function goHome() {
   currentFolder = null;
